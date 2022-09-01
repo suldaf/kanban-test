@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import CardTasks from "./CardTasks";
+import ModalConfirmation from "./ModalConfirmation";
 
 function GroupTodos(props) {
   const bgGroup = [
@@ -14,31 +15,49 @@ function GroupTodos(props) {
     "border-group-2-border text-group-2-text",
     "border-group-3-border text-group-3-text",
   ];
+  const [modalHidden, setModalHidden] = useState(true);
+  const [typeModal, setTypeModal] = useState("");
+  const [taskId, setTaskId] = useState(0);
   return (
     <div
-      className={`md:min-w-[335px] md:max-w-[350px] p-2 border rounded ${
-        bgGroup[props.index]
+      className={`md:min-w-[335px] md:max-w-[350px] p-4 border rounded ${
+        bgGroup[props.index % 4]
       } `}
     >
-      {/* {JSON.stringify(tasks.tasksByid)} */}
       <h1
         className={`border rounded w-[7rem] text-center p-1 font-normal text-sm ${
-          title[props.index]
+          title[props.index % 4]
         }`}
       >
         {props.data.title}
       </h1>
-      <p className="font-bold">{props.data.description}</p>
+      <p className="font-bold my-3 text-xs">{props.data.description}</p>
       {props.data.listTask.length !== 0 ? (
         props.data.listTask.map((e, i) => (
-          <CardTasks key={e.id} data={e} index={i} groupIndex={props.index} />
+          <CardTasks
+            key={e.id}
+            data={e}
+            index={i}
+            groupIndex={props.index}
+            modalHidden={modalHidden}
+            setModalHidden={setModalHidden}
+            typeModal={typeModal}
+            setTypeModal={setTypeModal}
+            setTaskId={setTaskId}
+          />
         ))
       ) : (
         <CardTasks noData={true} />
       )}
 
       <div className="mt-2">
-        <button className="flex justify-start items-center w-full">
+        <button
+          className="flex justify-start items-center "
+          onClick={() => {
+            setModalHidden(!modalHidden);
+            setTypeModal("newTask");
+          }}
+        >
           <svg
             width="20"
             height="20"
@@ -55,6 +74,15 @@ function GroupTodos(props) {
 
           <p className="ml-3">New Task</p>
         </button>
+        <ModalConfirmation
+          modalHidden={modalHidden}
+          typeModal={typeModal}
+          setModalHidden={setModalHidden}
+          setTypeModal={setTypeModal}
+          todoId={props.data.id}
+          taskId={taskId}
+          setTaskId={setTaskId}
+        />
       </div>
     </div>
   );

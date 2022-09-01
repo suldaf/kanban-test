@@ -3,18 +3,12 @@ import Header from "../components/Header";
 import GroupTodos from "../components/GroupTodos";
 import { useDispatch, useSelector } from "react-redux";
 import { getListTodos } from "../stores";
-import MenuDialog from "../components/MenuDialog";
 
-const token =
-  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NTksImV4cCI6MTY2MjI3NTUxNH0.f8xvWeJsLr9_GCeyKs2R45vIp-kawGYyFMCCA-E7cPI";
 function Home(props) {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
   useEffect(() => {
-    async function getTodos() {
-      await dispatch(getListTodos(token)).unwrap();
-    }
-    getTodos();
+    dispatch(getListTodos()).unwrap();
   }, [dispatch]);
 
   return (
@@ -28,7 +22,6 @@ function Home(props) {
         )}
         {/* <GroupTodos /> */}
       </div>
-      <div className="flex justify-center items-center mt-4"></div>
     </div>
   );
 }

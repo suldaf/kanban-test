@@ -36,9 +36,15 @@ function CardTasks(props) {
               </button>
               <MenuDialog
                 hidden={hidden}
+                setHidden={setHidden}
                 id={props.data.id}
                 todoId={props.data.todo_id}
                 groupIndex={props.groupIndex}
+                modalHidden={props.modalHidden}
+                setModalHidden={props.setModalHidden}
+                typeModal={props.typeModal}
+                setTypeModal={props.setTypeModal}
+                setTaskId={props.setTaskId}
               />
             </div>
           </div>
