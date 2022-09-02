@@ -5,9 +5,11 @@ import { deleteTask, getTask, patchTask, postTask, resetTask } from "../stores";
 function ModalConfirmation(props) {
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const [task, setTask] = useState("");
-  const [progress, setProgress] = useState(0);
   const taskById = useSelector((state) => state.todos.taskById);
+  const [task, setTask] = useState(taskById.name || "");
+  const [progress, setProgress] = useState(
+    Number(taskById.progress_percentage) || 0
+  );
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -122,8 +124,10 @@ function ModalConfirmation(props) {
               type="text"
               className="mb-2 border-2 rounded-lg px-3 py-2 "
               placeholder="Type your Task"
-              onChange={(e) => setTask(e.target.value)}
-              value={taskById.name || task}
+              onChange={(e) => {
+                setTask(e.target.value);
+              }}
+              value={task}
             />
 
             <label className="text-black text-xs font-bold mb-2">
@@ -134,7 +138,7 @@ function ModalConfirmation(props) {
                 type="text"
                 placeholder={Number(taskById.progress_percentage) || progress}
                 className="mb-2 border-2 rounded-lg px-3 py-2  w-36 after:content-['%'] after:text-gray-300 "
-                value={Number(taskById.progress_percentage) || progress}
+                value={Number(progress)}
                 onChange={(e) => {
                   if (isNaN(Number(e.target.value))) {
                     e.target.value = progress;
