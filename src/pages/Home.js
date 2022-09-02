@@ -20,7 +20,6 @@ function Home(props) {
         ) : (
           <div>No Data</div>
         )}
-        {/* <GroupTodos /> */}
       </div>
     </div>
   );

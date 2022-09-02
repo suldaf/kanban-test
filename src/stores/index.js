@@ -102,7 +102,6 @@ const todos = createSlice({
         state.data = [...action.payload];
       })
       .addCase(getTask.fulfilled, (state, action) => {
-        // console.log(action.payload);
         state.taskById = action.payload;
       });
   },
