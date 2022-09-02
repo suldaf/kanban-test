@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { patchTodos } from "../stores";
+import { patchTask } from "../stores";
 
 function MenuDialog(props) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function MenuDialog(props) {
         hidden={props.groupIndex === todos.data.length - 1}
         onClick={() =>
           dispatch(
-            patchTodos({
+            patchTask({
               todoId: props.todoId,
               taskId: props.id,
               data: { target_todo_id: todosId[props.groupIndex + 1] },
@@ -52,7 +52,7 @@ function MenuDialog(props) {
         hidden={props.groupIndex === 0}
         onClick={() =>
           dispatch(
-            patchTodos({
+            patchTask({
               todoId: props.todoId,
               taskId: props.id,
               data: { target_todo_id: todosId[props.groupIndex - 1] },

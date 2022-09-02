@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTask,
-  getTask,
-  patchTodos,
-  postTask,
-  resetTask,
-} from "../stores";
+import { deleteTask, getTask, patchTask, postTask, resetTask } from "../stores";
 
 function ModalConfirmation(props) {
   const ref = useRef(null);
@@ -123,15 +117,15 @@ function ModalConfirmation(props) {
             <label className="text-black text-xs font-bold mb-2">
               Task Name
             </label>
-            <div className="mb-2 border-2 rounded-lg px-3 py-2 ">
-              <input
-                type="text"
-                className="w-full"
-                placeholder="Type your Task"
-                onChange={(e) => setTask(e.target.value)}
-                value={taskById.name || task}
-              />
-            </div>
+
+            <input
+              type="text"
+              className="mb-2 border-2 rounded-lg px-3 py-2 "
+              placeholder="Type your Task"
+              onChange={(e) => setTask(e.target.value)}
+              value={taskById.name || task}
+            />
+
             <label className="text-black text-xs font-bold mb-2">
               Progress
             </label>
@@ -140,6 +134,7 @@ function ModalConfirmation(props) {
                 type="text"
                 placeholder={Number(taskById.progress_percentage) || progress}
                 className="mb-2 border-2 rounded-lg px-3 py-2  w-36 after:content-['%'] after:text-gray-300 "
+                value={Number(taskById.progress_percentage) || progress}
                 onChange={(e) => {
                   if (isNaN(Number(e.target.value))) {
                     e.target.value = progress;
@@ -185,7 +180,7 @@ function ModalConfirmation(props) {
                 switch (props.typeModal) {
                   case "editTask":
                     dispatch(
-                      patchTodos({
+                      patchTask({
                         todoId: props.todoId,
                         data: {
                           name: task,

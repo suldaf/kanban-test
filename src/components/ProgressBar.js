@@ -7,7 +7,7 @@ function ProgressBar(props) {
       : `transition-all ease-out duration-1000 h-full relative bg-done w-[100%]`;
   return (
     <>
-      <div className="h-3 relative w-[80%] md:w-[70%] rounded-full overflow-hidden ">
+      <div className="h-3 relative w-[75%] md:w-[70%] rounded-full overflow-hidden ">
         <div className="w-full h-full bg-gray-200 absolute"></div>
         <div
           id="bar"

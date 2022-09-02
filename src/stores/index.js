@@ -7,20 +7,7 @@ import axios from "axios";
 const BASE_URL = "https://todos-project-api.herokuapp.com";
 const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NTksImV4cCI6MTY2MjI3NTUxNH0.f8xvWeJsLr9_GCeyKs2R45vIp-kawGYyFMCCA-E7cPI";
-export const patchTodos = createAsyncThunk(
-  "todos/patch",
-  async (payload, thunkAPI) => {
-    const { todoId, taskId, data } = payload;
-    await axios.patch(
-      BASE_URL + "/todos/" + todoId + "/items/" + taskId,
-      data,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    thunkAPI.dispatch(getListTodos());
-  }
-);
+
 export const getListTodos = createAsyncThunk("todos/get", async () => {
   const { data } = await axios.get(BASE_URL + "/todos", {
     headers: { Authorization: `Bearer ${token}` },
@@ -41,6 +28,18 @@ export const getListTodos = createAsyncThunk("todos/get", async () => {
   });
   return mappedResponses;
 });
+
+export const postTodo = createAsyncThunk(
+  "todos/post",
+  async (payload, thunkAPI) => {
+    const { data } = payload;
+    await axios.post(BASE_URL + "/todos", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    thunkAPI.dispatch(getListTodos());
+  }
+);
+
 export const getTask = createAsyncThunk("task/get", async (payload) => {
   const { todoId, taskId } = payload;
   const { data } = await axios.get(
@@ -68,6 +67,20 @@ export const deleteTask = createAsyncThunk(
     await axios.delete(BASE_URL + "/todos/" + todoId + "/items/" + taskId, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    thunkAPI.dispatch(getListTodos());
+  }
+);
+export const patchTask = createAsyncThunk(
+  "task/patch",
+  async (payload, thunkAPI) => {
+    const { todoId, taskId, data } = payload;
+    await axios.patch(
+      BASE_URL + "/todos/" + todoId + "/items/" + taskId,
+      data,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     thunkAPI.dispatch(getListTodos());
   }
 );
